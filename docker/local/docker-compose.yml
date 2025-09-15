@@ -1,0 +1,38 @@
+services:
+  app-auth:
+    build:
+      context: ../../
+      dockerfile: docker/local/Dockerfile
+    working_dir: /app
+    ports:
+      - "${HOST_PORT}:3000"
+    volumes:
+      - ../../:/app
+    environment:
+      - MONGO_URI=${MONGO_URI}
+    depends_on:
+      - mongo
+    restart: unless-stopped
+    networks:
+      - auth-network
+
+  mongo:
+    image: mongo:4.4
+    container_name: mongo-auth
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - auth-network
+
+volumes:
+  mongo_data:
+
+networks:
+  auth-network:
+    driver: bridge
