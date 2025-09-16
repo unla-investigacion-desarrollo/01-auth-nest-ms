@@ -5,8 +5,7 @@ Este microservicio provee un punto central de autenticación y autorización bas
 
 ### Crear usuario
 
-**POST** `/user`
-
+**POST** `/api/v1/users`
 Crea un nuevo usuario en la base de datos.
 
 #### Body (JSON)
