@@ -12,7 +12,12 @@ import { MongooseModule } from '@nestjs/mongoose';
       isGlobal: true,
     }),
     UserModule,
-  MongooseModule.forRoot(process.env.MONGO_URI ?? (() => { throw new Error('MONGO_URI not set'); })()),
+    MongooseModule.forRoot(
+      process.env.MONGO_URI ??
+        (() => {
+          throw new Error('MONGO_URI not set');
+        })(),
+    ),
   ],
   controllers: [AppController],
   providers: [AppService],
